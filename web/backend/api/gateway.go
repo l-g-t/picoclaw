@@ -706,7 +706,7 @@ func (h *Handler) startGatewayLocked(initialStatus string, existingPid int) (int
 	logger.InfoC("gateway", fmt.Sprintf("Starting gateway process (%s)", execPath))
 
 	cmd = gatewayExecCommand(execPath, h.gatewayCommandArgs()...)
-	applyLauncherWindowsProcAttrs(cmd)
+	applyLauncherProcAttrs(cmd)
 	cmd.Env = os.Environ()
 	// Forward the launcher's config path via the environment variable that
 	// GetConfigPath() already reads, so the gateway sub-process uses the same

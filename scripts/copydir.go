@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -57,6 +58,17 @@ func main() {
 }
 
 func findRepoRoot() (string, error) {
+	_, file, _, ok := runtime.Caller(0)
+	if !ok {
+		return "", fmt.Errorf("unable to locate copydir.go source path")
+	}
+
+	scriptDir := filepath.Dir(file)
+	candidate := filepath.Clean(filepath.Join(scriptDir, ".."))
+	if err := validateRepoRoot(candidate); err == nil {
+		return candidate, nil
+	}
+
 	wd, err := os.Getwd()
 	if err != nil {
 		return "", err
@@ -68,15 +80,29 @@ func findRepoRoot() (string, error) {
 	}
 
 	for {
-		if _, err := os.Stat(filepath.Join(cur, ".git")); err == nil {
+		if err := validateRepoRoot(cur); err == nil {
 			return filepath.Clean(cur), nil
 		}
 		parent := filepath.Dir(cur)
 		if parent == cur {
-			return "", fmt.Errorf("could not find .git from %s", wd)
+			return "", fmt.Errorf("could not find repository root from %s", wd)
 		}
 		cur = parent
 	}
+}
+
+func validateRepoRoot(root string) error {
+	anchors := []string{
+		filepath.Join(root, "go.sum"),
+		filepath.Join(root, "LICENSE"),
+		filepath.Join(root, ".github"),
+	}
+	for _, anchor := range anchors {
+		if _, err := os.Stat(anchor); err != nil {
+			return fmt.Errorf("missing repo anchor %s: %w", anchor, err)
+		}
+	}
+	return nil
 }
 
 func normalizePathArg(arg, repoRoot string) (string, error) {

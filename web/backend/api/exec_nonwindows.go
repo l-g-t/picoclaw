@@ -8,4 +8,4 @@ func launcherExecCommand(name string, args ...string) *exec.Cmd {
 	return exec.Command(name, args...)
 }
 
-func applyLauncherWindowsProcAttrs(_ *exec.Cmd) {}
+func applyLauncherProcAttrs(_ *exec.Cmd) {}

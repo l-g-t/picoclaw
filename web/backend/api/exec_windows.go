@@ -9,11 +9,11 @@ import (
 
 func launcherExecCommand(name string, args ...string) *exec.Cmd {
 	cmd := exec.Command(name, args...)
-	applyLauncherWindowsProcAttrs(cmd)
+	applyLauncherProcAttrs(cmd)
 	return cmd
 }
 
-func applyLauncherWindowsProcAttrs(cmd *exec.Cmd) {
+func applyLauncherProcAttrs(cmd *exec.Cmd) {
 	if cmd == nil {
 		return
 	}
