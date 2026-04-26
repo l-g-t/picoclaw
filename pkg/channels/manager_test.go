@@ -1160,7 +1160,10 @@ func TestPreSend_ThoughtPlaceholderDeleteAndSkipsEdit(t *testing.T) {
 
 	msgIDs, handled := m.preSend(context.Background(), "test", msg, ch)
 	if handled {
-		t.Fatalf("expected thought message to fall through so the channel can send a structured message, got %v", msgIDs)
+		t.Fatalf(
+			"expected thought message to fall through so the channel can send a structured message, got %v",
+			msgIDs,
+		)
 	}
 	if ch.deleteCalls != 1 {
 		t.Fatalf("expected placeholder deletion, got %d delete calls", ch.deleteCalls)
