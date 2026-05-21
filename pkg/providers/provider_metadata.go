@@ -460,6 +460,7 @@ var modelProviderOptionsByName = map[string]ModelProviderOption{
 		DefaultModelAllowed: true,
 		SupportsFetch:       true,
 		Priority:            39,
+		CommonModels:        []string{"mimo-v2.5", "mimo-v2.5-pro"},
 		httpAPI:             true,
 	},
 	"avian": {
