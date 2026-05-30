@@ -1,8 +1,9 @@
 //go:build !azidentity
 
-// Package azure: stub for the Entra ID auth path when built without
-// the azidentity tag. Mirrors the exported surface of identity.go so
-// callers compile cleanly in the default build.
+// Stub for the Entra ID auth path when built without the azidentity tag.
+// Mirrors the exported surface of identity.go so callers compile cleanly
+// in the default build.
+
 package azure
 
 import "fmt"

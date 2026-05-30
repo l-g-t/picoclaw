@@ -1,8 +1,9 @@
 //go:build azidentity
 
-// Package azure: Entra ID (DefaultAzureCredential) auth adapter.
+// Entra ID (DefaultAzureCredential) auth adapter.
 // Built only when -tags azidentity is supplied; otherwise identity_stub.go
 // satisfies the same exported API with a friendly error.
+
 package azure
 
 import (
